@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mars-Command-2.CSharp.Plugins", "Mars-Command-2.CSharp.Plugins.csproj", "{47A9A4EA-FFD9-3E6B-265D-8022178B561C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mars-Command-2.CSharp", "Mars-Command-2.CSharp.csproj", "{83D36B29-FDD8-3DC6-8000-64C8C75FF0B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mars-Command-2.CSharp.Editor", "Mars-Command-2.CSharp.Editor.csproj", "{B190FD96-E2FA-B6C4-1319-D0BAABFFE8B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47A9A4EA-FFD9-3E6B-265D-8022178B561C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47A9A4EA-FFD9-3E6B-265D-8022178B561C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47A9A4EA-FFD9-3E6B-265D-8022178B561C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47A9A4EA-FFD9-3E6B-265D-8022178B561C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83D36B29-FDD8-3DC6-8000-64C8C75FF0B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83D36B29-FDD8-3DC6-8000-64C8C75FF0B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83D36B29-FDD8-3DC6-8000-64C8C75FF0B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83D36B29-FDD8-3DC6-8000-64C8C75FF0B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B190FD96-E2FA-B6C4-1319-D0BAABFFE8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B190FD96-E2FA-B6C4-1319-D0BAABFFE8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B190FD96-E2FA-B6C4-1319-D0BAABFFE8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B190FD96-E2FA-B6C4-1319-D0BAABFFE8B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
