@@ -561,7 +561,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -774,7 +774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePower: 5
-  health: 300
+  health: 250
   shootingDistance: 70
   rotationSpeed: 25
   turretGun: {fileID: 427066}

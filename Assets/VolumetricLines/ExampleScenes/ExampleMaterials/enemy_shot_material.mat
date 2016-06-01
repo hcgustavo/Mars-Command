@@ -130,7 +130,7 @@ Material:
       data:
         first:
           name: _LineWidth
-        second: 64
+        second: 10
       data:
         first:
           name: _LineScale

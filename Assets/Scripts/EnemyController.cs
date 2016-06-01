@@ -85,16 +85,15 @@ public class EnemyController : MonoBehaviour {
 
     void Shoot()
     {
-        PlayShootSound();
-        GameObject go = GameObject.Instantiate(gunShot, gunPoint.position, gunPoint.rotation) as GameObject;
-        GameObject.Destroy(go, 1f);
-
         RaycastHit hit;
         if (Physics.Raycast(gunPoint.transform.position, transform.forward, out hit, shootingDistance))
         {
             if (hit.collider.gameObject.name == "Player")
             {
                 //Hit player
+                PlayShootSound();
+                GameObject go = GameObject.Instantiate(gunShot, gunPoint.position, gunPoint.rotation) as GameObject;
+                GameObject.Destroy(go, 1f);
                 player.SendMessage("TakeHit", hitAmount);
             }
         }
@@ -105,6 +104,8 @@ public class EnemyController : MonoBehaviour {
     {
         isDead = true;
         explosion.SetActive(true);
+        navAgent.Stop();
+        Destroy(gameObject, 5);
     }
 
     public void TakeHit(int amount)
@@ -114,7 +115,6 @@ public class EnemyController : MonoBehaviour {
         {
             // Dies
             Die();
-            Destroy(gameObject, 10);
         }
     }
 

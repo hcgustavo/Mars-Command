@@ -49,21 +49,20 @@ public class TurretController : MonoBehaviour {
 
     void PlayShootSound()
     {
-        audioSources[1].Play();
+        audioSources[0].Play();
     }
 
     void Shoot()
     {
-        PlayShootSound();
-        GameObject go = GameObject.Instantiate(gunShot, gunPoint.position, gunPoint.rotation) as GameObject;
-        GameObject.Destroy(go, 1f);
-
         RaycastHit hit;
         if (Physics.Raycast(gunPoint.transform.position, gunPoint.transform.forward, out hit, shootingDistance))
         {
             if (hit.collider.gameObject.name == "Player")
             {
                 //Hit player
+                PlayShootSound();
+                GameObject go = GameObject.Instantiate(gunShot, gunPoint.position, gunPoint.rotation) as GameObject;
+                GameObject.Destroy(go, 1f);
                 hit.collider.gameObject.SendMessage("TakeHit", firePower);
             }
         }
@@ -74,6 +73,7 @@ public class TurretController : MonoBehaviour {
     {
         isDead = true;
         explosion.SetActive(true);
+        Destroy(gameObject, 10);
     }
 
     public void TakeHit(int amount)
@@ -83,7 +83,6 @@ public class TurretController : MonoBehaviour {
         {
             // Dies
             Die();
-            Destroy(gameObject, 10);
         }
     }
 }

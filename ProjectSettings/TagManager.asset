@@ -9,6 +9,7 @@ TagManager:
   - Turret
   - Enemy
   - Point
+  - MedPack
   layers:
   - Default
   - TransparentFX

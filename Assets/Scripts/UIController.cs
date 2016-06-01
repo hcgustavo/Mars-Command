@@ -11,11 +11,13 @@ public class UIController : MonoBehaviour {
     public GameObject gameOverPanel;
     public GameObject gameCompletedPanel;
     public GameObject briefingPanel;
+    public GameObject pausePanel;
 
     private float initialTimeShowPanel;
 
 	// Use this for initialization
 	void Start () {
+        briefingPanel.SetActive(true);
 	}
 	
 	// Update is called once per frame
@@ -29,7 +31,7 @@ public class UIController : MonoBehaviour {
 
     public void SetHealth(string health)
     {
-        healthText.text = health;
+        healthText.text = "Health: " + health;
     }
 
     public void SetCrystals(int crystals)
@@ -75,6 +77,16 @@ public class UIController : MonoBehaviour {
         Time.timeScale = 1f;
     }
 
+    public void ShowPausePanel()
+    {
+        pausePanel.SetActive(true);
+    }
+
+    public void HidePausePanel()
+    {
+        pausePanel.SetActive(false);
+    }
+
 
     public void StartGame()
     {
@@ -84,6 +96,18 @@ public class UIController : MonoBehaviour {
     public void LoadMenu()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        ShowPausePanel();
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        HidePausePanel();
     }
 
 }

@@ -5,6 +5,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
     public AudioClip collectCrystalSound;
+    public AudioClip collectMedPack;
 
     private AudioSource audioSource;
     public static bool playerIsDead;
@@ -19,10 +20,19 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 	}
 
-    public void PlayCollectSound()
+    public void PlayCollectSound(string itemTag)
     {
-        audioSource.clip = collectCrystalSound;
-        audioSource.Play();
+        if(itemTag == "Krystal")
+        {
+            audioSource.clip = collectCrystalSound;
+            audioSource.Play();
+        }
+        else if(itemTag == "MedPack")
+        {
+            audioSource.clip = collectMedPack;
+            audioSource.Play();
+        }
+        
     }
 
     public void GameOver()

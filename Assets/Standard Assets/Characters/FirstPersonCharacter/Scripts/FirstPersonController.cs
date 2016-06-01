@@ -55,6 +55,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool isDead;
         private bool gameCompleted;
         private bool isReadingBriefing;
+        private bool gamePaused;
 
         // Use this for initialization
         private void Start()
@@ -79,6 +80,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             isDead = false;
             gameCompleted = false;
             isReadingBriefing = true;
+            gamePaused = false;
 
             GameObject.Find("UIController").SendMessage("SetHealth", currentHealth + "/" + m_Health);
         }
@@ -88,13 +90,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
             
-            if(!isDead && !gameCompleted && !isReadingBriefing)
+            if(!isDead && !gameCompleted && !isReadingBriefing && !gamePaused)
             {
                 m_MouseLook.SetCursorLock(true);
                 if (Input.GetMouseButtonDown(0))
                 {
                     Shoot();
 
+                }
+
+                if(Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Pause();
                 }
 
                 RotateView();
@@ -142,43 +149,47 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-            float speed;
-            GetInput(out speed);
-            // always move along the camera forward as it is the direction that it being aimed at
-            Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
-
-            // get a normal for the surface that is being touched to move along it
-            RaycastHit hitInfo;
-            Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
-                               m_CharacterController.height/2f, ~0, QueryTriggerInteraction.Ignore);
-            desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
-
-            m_MoveDir.x = desiredMove.x*speed;
-            m_MoveDir.z = desiredMove.z*speed;
-
-
-            if (m_CharacterController.isGrounded)
+            if(!isDead && !gameCompleted && !isReadingBriefing && !gamePaused)
             {
-                m_MoveDir.y = -m_StickToGroundForce;
+                float speed;
+                GetInput(out speed);
+                // always move along the camera forward as it is the direction that it being aimed at
+                Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
 
-                if (m_Jump)
+                // get a normal for the surface that is being touched to move along it
+                RaycastHit hitInfo;
+                Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
+                                   m_CharacterController.height / 2f, ~0, QueryTriggerInteraction.Ignore);
+                desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
+
+                m_MoveDir.x = desiredMove.x * speed;
+                m_MoveDir.z = desiredMove.z * speed;
+
+
+                if (m_CharacterController.isGrounded)
                 {
-                    m_MoveDir.y = m_JumpSpeed;
-                    PlayJumpSound();
-                    m_Jump = false;
-                    m_Jumping = true;
+                    m_MoveDir.y = -m_StickToGroundForce;
+
+                    if (m_Jump)
+                    {
+                        m_MoveDir.y = m_JumpSpeed;
+                        PlayJumpSound();
+                        m_Jump = false;
+                        m_Jumping = true;
+                    }
                 }
-            }
-            else
-            {
-                m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
-            }
-            m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
+                else
+                {
+                    m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
+                }
+                m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
 
-            ProgressStepCycle(speed);
-            UpdateCameraPosition(speed);
+                ProgressStepCycle(speed);
+                UpdateCameraPosition(speed);
 
-            m_MouseLook.UpdateCursorLock();
+                m_MouseLook.UpdateCursorLock();
+            }
+            
         }
 
 
@@ -330,10 +341,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 collectedCrystals++;
                 Destroy(other.gameObject);
                 GameObject.Find("UIController").SendMessage("SetCrystals", collectedCrystals);
-                GameObject.Find("GameManager").SendMessage("PlayCollectSound");           
+                GameObject.Find("GameManager").SendMessage("PlayCollectSound", "Krystal");           
             }
-
-            else if( other.gameObject.name == "Spaceship")
+            else if(other.gameObject.tag == "MedPack") {
+                if(currentHealth < m_Health)
+                {
+                    currentHealth += 50;
+                    if (currentHealth > m_Health)
+                        currentHealth = m_Health;
+                    Destroy(other.gameObject);
+                    GameObject.Find("UIController").SendMessage("SetHealth", currentHealth + "/" + m_Health);
+                    GameObject.Find("GameManager").SendMessage("PlayCollectSound", "MedPack");
+                }
+                
+            }
+            else if(other.gameObject.name == "Spaceship")
             {
                 if(collectedCrystals == 5)
                 {
@@ -362,6 +384,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void NotReadingBriefing()
         {
             isReadingBriefing = false;
+        }
+
+        public void Pause()
+        {
+            GameObject.Find("UIController").SendMessage("PauseGame");
+            gamePaused = true;
+        }
+
+        public void Resume()
+        {
+            GameObject.Find("UIController").SendMessage("ResumeGame");
+            gamePaused = false;
         }
     }
 }
