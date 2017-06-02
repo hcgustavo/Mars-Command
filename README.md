@@ -11,3 +11,5 @@ Get ready to fight high-tech robots and turrets with heavy laser-weapons.
 Find all the five crystals in the area and come back to your spaceship safely.
 
 - Features: Defy enemies with a powerful laser gun. Robots with some level of intelligence: they move around the base all the time, and when they see you, get ready to get shot be followed by them. Two types of turrets with different features (shooting range, fire power and strength).
+
+- Developed using Unity game engine and C# for scripting
